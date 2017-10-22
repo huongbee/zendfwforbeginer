@@ -1,0 +1,59 @@
+<?php 
+	$myForm	= $this->form;
+
+	$textbox	= $myForm->get('my-textbox');
+	$number	= $myForm->get('my-number');
+	$password = $myForm->get('my-password');
+	$email = $myForm->get('email');
+	$range = $myForm->get('my-range');
+	$day = $myForm->get('my-date');
+	$color = $myForm->get('my-color');
+	$button = $myForm->get('my-button');
+	$radio = $myForm->get('my-radio');
+	$textarea = $myForm->get('my-textarea');
+	$checkbox = $myForm->get('my-checkbox');
+	$multiCheckbox = $myForm->get('my-multicheckbox');
+	$hidden = $myForm->get('input-hidden');
+	$select = $myForm->get('select');
+	$file = $myForm->get('my-file');
+	$captcha = $myForm->get('captcha');
+	$submit	= $myForm->get('my-submit');
+
+
+	echo $this->form()->openTag($myForm);
+	
+	echo $this->FormRow($textbox);
+	echo '<br>';
+	echo $this->FormRow($number);
+	echo '<br>';
+	echo $this->FormRow($password);
+	echo '<br>';
+	echo $this->FormRow($email);
+	echo '<br>';
+	echo $this->FormRow($range);
+	echo '<br>';
+	echo $this->FormRow($day);
+	echo '<br>';
+	echo $this->FormRow($color);
+	echo '<br>';
+	echo $this->FormRow($button);
+	echo '<br>';
+	echo $this->FormRow($radio);
+	echo '<br>';
+	echo $this->FormRow($textarea);
+	echo '<br>';
+	echo $this->FormRow($checkbox);
+	echo '<br>';
+	echo $this->FormRow($multiCheckbox);
+	echo '<br>';
+	echo $this->FormRow($hidden);
+	echo '<br>';
+	echo $this->FormRow($select);
+	echo '<br>';
+	echo $this->FormRow($file);
+	echo $this->FormRow($captcha);
+	echo '<br>';
+	echo $this->FormRow($submit);
+	
+	echo $this->form()->closeTag();
+?>

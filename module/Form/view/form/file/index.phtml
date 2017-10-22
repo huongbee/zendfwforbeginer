@@ -1,0 +1,130 @@
+<?php
+$title = 'Upload File';
+$this->headTitle($title);
+?>
+<h1><?php echo $this->escapeHtml($title); ?></h1>
+<?php
+$form = $this->form;
+$form->prepare();
+$form->setAttribute('method', 'post');
+$form->setAttribute('id','upload-file');
+$form->setAttribute('enctype','multipart/form-data');
+$form->setAttribute('action',
+                        $this->url('form/sub', //your route name ...
+                            array('controller'=>'File', 'action' => 'index')
+                        )
+                    ); 
+
+?>
+
+
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <?= $this->form()->openTag($form);?>
+    <!-- V38 -->
+        <?php echo $this->formFileSessionProgress();?>
+    <!-- end v38 -->
+    <div class="form-group">
+        <?= $this->formLabel($form->get('fileupload')); ?>
+        <?= $this->formElement($form->get('fileupload')); ?>
+        <?= $this->formElementErrors($form->get('fileupload')); ?>
+    </div>
+    <div class="form-group">
+        <button type="submit" class="btn btn-success">Upload</button>
+    </div>
+    <div class="form-group">
+        <?= $this->form()->closeTag(); ?>
+    </div>
+</div>
+<div id="progress" class="help-block">
+    <div class="progress progress-info progress-striped">
+        <div class="bar"></div>
+    </div>
+    <p></p>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script src="http://malsup.github.com/jquery.form.js"></script>
+<script>
+var progressInterval;
+
+function getProgress() {
+    // Poll our controller action with the progress id
+    var url = '/zend/public/form/File/index?id=' + $('#progress_key').val();
+    $.getJSON(url, function(data) {
+        if (data.status && !data.status.done) {
+            var value = Math.floor((data.status.current / data.status.total) * 1000);
+            showProgress(value, 'Uploading...');
+        } else {
+            showProgress(100, 'Complete!');
+            clearInterval(progressInterval);
+        }
+    });
+}
+
+function startProgress() {
+    showProgress(0, 'Starting upload...');
+    progressInterval = setInterval(getProgress, 900);
+}
+
+function showProgress(amount, message) {
+    $('#progress').show();
+    $('#progress .bar').width(amount + '%');
+    $('#progress > p').html(message);
+    if (amount < 100) {
+        $('#progress .progress')
+            .addClass('progress-info active')
+            .removeClass('progress-success');
+    } else {
+        $('#progress .progress')
+            .removeClass('progress-info active')
+            .addClass('progress-success');
+    }
+}
+
+$(function() {
+    // Register a 'submit' event listener on the form to perform the AJAX POST
+    $('#upload-file').on('submit', function(e) {
+        e.preventDefault();
+
+        if ($('#fileupload').val() == '') {
+            // No files selected, abort
+            return;
+        }
+
+        // Perform the submit
+        //$.fn.ajaxSubmit.debug = true;
+        $(this).ajaxSubmit({
+            beforeSubmit: function(arr, $form, options) {
+                // Notify backend that submit is via ajax
+                arr.push({ name: "isAjax", value: "1" });
+            },
+            success: function (response, statusText, xhr, $form) {
+                clearInterval(progressInterval);
+                showProgress(100, 'Complete!');
+
+                // TODO: You'll need to do some custom logic here to handle a successful
+                // form post, and when the form is invalid with validation errors.
+                if (response.status) {
+                    // TODO: Do something with a successful form post, like redirect
+                    // window.location.replace(response.redirect);
+                } else {
+                    // Clear the file input, otherwise the same file gets re-uploaded
+                    // http://stackoverflow.com/a/1043969
+                    var fileInput = $('#fileupload');
+                    fileInput.replaceWith( fileInput.val('').clone( true ) );
+
+                    // TODO: Do something with these errors
+                    // showErrors(response.formErrors);
+                }
+            },
+            error: function(a, b, c) {
+                // NOTE: This callback is *not* called when the form is invalid.
+                // It is called when the browser is unable to initiate or complete the ajax submit.
+                // You will need to handle validation errors in the 'success' callback.
+                console.log(a, b, c);
+            }
+        });
+        // Start the progress polling
+        startProgress();
+    });
+});
+</script>

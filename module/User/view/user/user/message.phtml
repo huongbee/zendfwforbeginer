@@ -1,0 +1,31 @@
+<?php
+$this->headTitle('Thank You');
+?>
+
+<div class="row">
+<div class="col-md-offset-4 col-md-5">
+<h1>Reset Password</h1>
+
+<?php if ($id=='sent'): ?>
+<p>
+    Liên kết đặt lại mật khẩu đã được gửi đến địa chỉ email của bạn.
+</p>
+<?php elseif ($id=='invalid-email'): ?>
+<p>
+    Không có người dùng nào có email như vậy.
+</p>
+<?php elseif ($id=='set'): ?>
+<p>
+    Mật khẩu mới của bạn đã được thiết lập thành công.
+</p>
+<p>
+    Return to <a href="#">login page</a>.
+</p>
+<?php elseif ($id=='failed'): ?>
+
+    Token không hợp lệ hoặc có thể đã hết hạn. Xin vui lòng trở lại
+    <a href="<?= $this->url('reset-password') ?>">đây</a> và thử lại
+</p>
+<?php endif; ?>
+</div>
+</div>    

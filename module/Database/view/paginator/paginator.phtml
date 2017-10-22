@@ -1,0 +1,39 @@
+
+<?php if ($this->pageCount): ?>
+<ul class="pagination">
+    
+    <!-- Previous page link -->
+    <?php if (isset($this->previous)): ?>
+        <li><a href="<?= $this->url($this->route, array('page' => $this->previous)); ?>">
+        &laquo;
+        </a></li>
+    <?php else: ?>
+        <li class="disabled"><a href="#">&laquo;</a></li>
+    <?php endif; ?>
+    
+    
+    <?php
+    
+    $pagesInRange	= '';
+	foreach ($this->pagesInRange as $key) {
+		$linkPage	=	$this->currentURL . $key;
+		
+		if($this->current == $key) {
+			$pagesInRange	.= sprintf('<li class="active"><a href="#">%s <span class="sr-only">(current)</span></a></li>',$key);
+		}else{
+			$pagesInRange	.= sprintf('<li><a href="%s">%s</a></li>', $linkPage, $key);
+		}
+	}
+    echo $pagesInRange;
+    ?>
+
+    <?php if (isset($this->next)): ?>
+        <li><a href="<?= $this->url($this->route, array('page' => $this->next)); ?>">
+        &raquo;
+        </a></li>
+    <?php else: ?>
+        <li class="disabled"><a href="#">&raquo;</a></li>
+    <?php endif; ?>
+</ul>
+<?php endif; ?>
+

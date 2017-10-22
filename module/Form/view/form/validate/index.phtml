@@ -1,0 +1,17 @@
+<?php
+
+$validate = $this->messages;
+// echo '<pre>';
+// print_r($validate);
+// echo '</pre>';
+// die;
+$textbox	= $validate->get('my-textbox');
+$submit	= $validate->get('submit');
+
+echo $this->form()->openTag($validate);
+
+echo $this->FormRow($textbox);
+echo '<br>';
+echo $this->FormRow($submit);
+
+echo $this->form()->closeTag();

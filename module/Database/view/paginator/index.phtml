@@ -1,0 +1,35 @@
+<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-md-offset-3">
+	<h2>Pagination</h2>
+	<table class="table table-hover table-bordered">
+		<tbody>
+			<tr>
+				<th width="25%">Name</th>
+				<th>Price</th>
+			</tr>
+			<?php if (count($this->paginator)): ?>
+			<?php foreach ($this->paginator as $item):?>
+			<tr>
+				<td><?=$item['name']?></td>
+				<td><?=number_format($item['price'])?></td>
+			</tr>
+			<?php endforeach ?>
+			<?php endif; ?>
+		</tbody>
+	</table>
+	<?php echo $this->paginationControl($this->paginator,
+	'All',
+	'paginator/paginator-1.phtml', array('route' => 'paginator')); ?>
+
+</div>
+</div>
+
+<!-- 
+	1: All: 
+Trả về mỗi trang. 
+Điều này hữu ích cho các trình đơn thả xuống trình đơn pagination 
+với các trang tương đối ít. Trong những trường hợp này, 
+bạn muốn tất cả các trang có sẵn cho người dùng cùng một lúc. 
+2: Elastic 
+Một kiểu cuộn giống như Google mở rộng 
+và hợp đồng khi người dùng cuộn qua các trang.
+-->

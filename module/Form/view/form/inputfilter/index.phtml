@@ -1,0 +1,81 @@
+<?php
+$title = 'Input Filter';
+$this->headTitle($title);
+?>
+<h1><?php echo $this->escapeHtml($title); ?></h1>
+<?php
+$form = $this->form;
+$form->prepare();
+
+$form->setName('validate-form');
+$form->setAttribute('action', '#');
+$form->setAttribute('method', 'POST');
+$form->setAttributes([
+        'class'		=> 'form-horizontal',
+        'id'		=> 'my-form-id',
+        'enctype'	=> 'multipart/form-data',
+        'style'		=> 'margin: 20px',
+]);
+
+
+?>
+<?= $this->form()->openTag($form);?>
+<?= $this->formLabel($form->get('email')); ?>
+<?= $this->formElement($form->get('email')); ?>
+<!-- V34 -->
+<?= $this->formElementErrors($form->get('email')); ?>   
+
+<?= $this->formLabel($form->get('password')); ?>
+<?= $this->formElement($form->get('password')); ?>
+<!-- V34 -->
+<?= $this->formElementErrors($form->get('password')); ?>
+
+<?= $this->formLabel($form->get('remember')); ?>
+<?= $this->formElement($form->get('remember')); ?>
+
+<?= $this->formRow($form->get('submit')); ?>
+	
+<?= $this->form()->closeTag(); ?>
+
+<!-- ===============v34================= -->
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+  	<div class="panel panel-default">
+		<div class="panel-heading">
+			<span class="glyphicon glyphicon-lock"></span> Login
+		</div>
+		<div class="panel-body">
+			<?= $this->form()->openTag($form); ?>
+				
+			<div class="form-group">
+				<?= $this->formLabel($form->get('email')); ?>
+				<div class="col-sm-9">
+					<?= $this->formElement($form->get('email')); ?>
+					<?= $this->formElementErrors($form->get('email')); ?>
+				</div>
+			</div>
+				
+			<div class="form-group">
+				<?= $this->formLabel($form->get('password')); ?>
+				<div class="col-sm-9">
+					<?= $this->formElement($form->get('password')); ?>
+					<?= $this->formElementErrors($form->get('password')); ?>
+				</div>				
+			</div>
+				
+			<div class="form-group">
+				<div class="col-sm-6 col-sm-offset-3">
+					<?= $this->formElement($form->get('remember')); ?>
+					<?= $this->formLabel($form->get('remember')); ?>
+				</div>
+			</div>
+			<div class="form-group"> 	
+				<div class="col-sm-6 col-sm-offset-3">
+					<?= $this->formElement($form->get('submit')); ?>
+				</div>
+			</div>
+			<?= $this->form()->closeTag(); ?>
+		</div>
+	</div>
+  </div>    
+</div>

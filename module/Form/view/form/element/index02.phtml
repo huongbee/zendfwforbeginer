@@ -1,0 +1,35 @@
+<style>
+	h5 {color:blue}
+</style>
+
+<?php 
+
+	
+	$myForm	= $this->form02;
+	echo $this->form()->openTag($this->form02);
+	
+	echo '<h5>Zend\Form\Element\Text</h5>';
+	echo '<br />' .$this->formText($myForm->get('my-textbox'));
+
+	echo '<h5>Zend\Form\Element\Number</h5>';
+	echo $this->formNumber($myForm->get('my-number'));
+	
+	echo '<h5>Zend\Form\Element\Password</h5>';
+	echo $this->formPassword($myForm->get('my-password'));
+
+ 	echo '<h5>Zend\Form\Element\Textarea</h5>';
+ 	echo $this->formTextarea($myForm->get('my-textarea'));
+	
+	echo '<h5>Zend\Form\Element\Button</h5>';
+	echo $this->formButton($myForm->get('my-button'));
+	echo $this->formButton()->render($myForm->get('my-submit'), 'My Submit form');
+	echo $this->formButton()->render($myForm->get('my-button'), 'Send');
+	
+	echo $this->formButton()->openTag($myForm->get('my-button'));
+		echo 'Register';
+	echo $this->formButton()->closeTag();
+	
+	echo $this->form()->closeTag();
+?>
+
+
